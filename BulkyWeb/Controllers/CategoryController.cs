@@ -1,6 +1,7 @@
 ﻿using BulkyWeb.Data;
 using BulkyWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BulkyWeb.Controllers
 {
@@ -31,12 +32,16 @@ namespace BulkyWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(category);
-                await _db.SaveChangesAsync();
-            return RedirectToAction("Index");
+                await AddCategory(category);
+                return RedirectToAction("Index");
             }
 
             return View();
+        }        
+        private async Task AddCategory(Category category)
+        {
+            _db.Categories.Add(category);
+            await _db.SaveChangesAsync();
         }
     }
 }
