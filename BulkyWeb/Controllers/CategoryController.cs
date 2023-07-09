@@ -33,6 +33,7 @@ namespace BulkyWeb.Controllers
             if (ModelState.IsValid)
             {
                 await AddCategory(category);
+                TempData["successMsg"] = "Category created successfully!";              
                 return RedirectToAction("Index");
             }
 
@@ -54,6 +55,7 @@ namespace BulkyWeb.Controllers
             {
                 _db.Categories.Update(category);
                await _db.SaveChangesAsync();
+                TempData["successMsg"] = "Category updated successfully!";
                 return RedirectToAction("Index");
             }
 
@@ -70,6 +72,8 @@ namespace BulkyWeb.Controllers
 
             _db.Categories.Remove(category);
             _db.SaveChanges();
+            TempData["successMsg"] = "Category deleted successfully!";
+
             return RedirectToAction("Index");
         }
         private async Task AddCategory(Category category)
