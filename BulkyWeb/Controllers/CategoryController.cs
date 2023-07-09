@@ -37,6 +37,27 @@ namespace BulkyWeb.Controllers
             }
 
             return View();
+        }   
+        
+        public IActionResult Edit(int? id)
+        {
+            if (id is null && id == 0) return NotFound();
+
+            var category = _db.Categories.FirstOrDefault(c => c.Id == id);
+            return View(category);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Category category)
+        {           
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Update(category);
+               await _db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View();
         }        
         private async Task AddCategory(Category category)
         {
