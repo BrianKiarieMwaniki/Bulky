@@ -58,7 +58,20 @@ namespace BulkyWeb.Controllers
             }
 
             return View();
-        }        
+        }
+        
+        public IActionResult Delete(int? id)
+        {
+            if(id is null  && id == 0) return NotFound();
+
+            var category = _db.Categories.FirstOrDefault(c =>c.Id == id);
+
+            if(category == null) return NotFound();
+
+            _db.Categories.Remove(category);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         private async Task AddCategory(Category category)
         {
             _db.Categories.Add(category);
