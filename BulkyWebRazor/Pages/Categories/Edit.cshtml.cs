@@ -32,6 +32,9 @@ namespace BulkyWebRazor.Pages.Categories
             {
                 db.Categories.Update(Category);
                 db.SaveChanges();
+
+                TempData["success"] = "Category updated successfully!";
+
                 return RedirectToPage("index");
             }
 
